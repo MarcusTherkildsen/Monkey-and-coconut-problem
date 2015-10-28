@@ -22,8 +22,8 @@ public class MonkeyJava {
 
                 // Removing 1 coconut (for the monkey) and the amount that the certain sailor takes for himself
                 num_coc = num_coc - 1 - (num_coc-1)/num_sailors;
-
-            }
+            
+			}
 
             /*
             Now each sailor has his own pile.
