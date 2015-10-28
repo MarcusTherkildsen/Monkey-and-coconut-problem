@@ -39,7 +39,7 @@ for sd in xrange(search_to):
     # The monkey has 5
     # and there's a pile left.
 
-    # Checking if there is an amount divisable by num_sailors left in the pile
+    # Checking if there is an amount divisible by num_sailors left in the pile
     # and if the number of remaining is positive (of course)
 
     if (num_coc) % num_sailors == 0 and num_coc >= 0:
