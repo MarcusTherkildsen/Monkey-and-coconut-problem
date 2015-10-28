@@ -2,6 +2,7 @@ using System;
 /**
  * Created by Marcus Therkildsen on 27-10-2015.
  * Using http://www.tutorialspoint.com/compile_csharp_online.php 
+ * or http://codepad.org/
  * to check if working
  */
 public class MonkeyCSharp {
