@@ -2,7 +2,6 @@ using System;
 /**
  * Created by Marcus Therkildsen on 27-10-2015.
  * Using http://www.tutorialspoint.com/compile_csharp_online.php 
- * or http://codepad.org/
  * to check if working
  */
 public class MonkeyCSharp {
@@ -11,8 +10,9 @@ public class MonkeyCSharp {
     public static void Main(String[] args) {
         
         // Creating some start variables
-        int num_sailors = 5;
+        float num_sailors = 5;
         int search_to = 3500;
+		float perc = (1 - 1/num_sailors); 
         
         // Go through the number of sailors
         for (int i=0;i<search_to;i++){
@@ -22,7 +22,7 @@ public class MonkeyCSharp {
             for (int j=0; j<num_sailors;j++){
 
                 // Removing 1 coconut (for the monkey) and the amount that the certain sailor takes for himself
-                num_coc = num_coc - 1 - (num_coc-1)/num_sailors;
+                num_coc = (num_coc - 1)*perc;
             
 			}
             
