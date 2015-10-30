@@ -1,6 +1,7 @@
 // Creating some start variables
 var num_sailors = 5;
 var search_to = 3500;
+var perc = (1-1/num_sailors);
 
 // For a certain amount of coconuts to begin with
 for (var i=0; i<search_to; i++){
@@ -10,7 +11,7 @@ for (var i=0; i<search_to; i++){
 	for (var j=0; j<num_sailors;j++){
 
 		// Removing 1 coconut (for the monkey) and the amount that the certain sailor takes for himself
-		num_coc = num_coc - 1 - (num_coc-1)/num_sailors;		
+		num_coc = (num_coc - 1)*perc;		
 	}
 
 	/*
