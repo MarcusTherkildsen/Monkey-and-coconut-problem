@@ -24,6 +24,7 @@ search_to = 3500
 for_plot = []
 solution_x = []
 solution_y = []
+perc = (1-1/num_sailors)
 # Answer is 3121
 for sd in xrange(search_to):
     num_coc = np.copy(sd)
@@ -31,7 +32,7 @@ for sd in xrange(search_to):
 
         # Removing 1 coconut (for the monkey) and the amount that the certain
         # sailor takes for himself
-        num_coc = num_coc - 1 - (num_coc-1)/num_sailors
+        num_coc = (num_coc - 1)*perc
 
     for_plot.append((num_coc) % num_sailors)
 
