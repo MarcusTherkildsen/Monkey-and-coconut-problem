@@ -40,7 +40,7 @@ int main()
 		if (fmod(num_coc, num_sailors) == 0 & (num_coc >= 0)){
             /* If the remaining (positive) number of coconuts is divisible
             between the sailors, then we found the solution.*/
-	        printf ( "Solution: %i coconuts to begin with\n",i);
+	        printf ( "Solution: %d coconuts to begin with\n",i);
 		} 
     }
     return 0;
