@@ -1,6 +1,9 @@
+% Test at http://www.tutorialspoint.com/matlab/try_matlab.php
+
 % Creating some start variables
 num_sailors = 5; 
 search_to = 3499;
+perc = (1-1/num_sailors);
 
 % For a certain amount of coconuts to begin with
 for i=0:search_to
@@ -11,8 +14,8 @@ for i=0:search_to
     
         % Removing 1 coconut (for the monkey) and the amount that the certain
         % sailor takes for himself
-        num_coc = num_coc - 1 - (num_coc-1)/num_sailors;
-    end 
+		num_coc = (num_coc-1)*perc; 
+	end 
     
 	% Now each sailor has his own pile.
 	% The monkey has 5 and there's a pile left.
