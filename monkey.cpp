@@ -11,8 +11,9 @@ using namespace std;
 int main()
 {
     // Creating some start variables
-    int num_sailors = 5;
+    float num_sailors = 5;
     int search_to = 3500;
+	float perc = (1 - 1/num_sailors); 
     
     // Go through the number of sailors
     for (int i=0;i<search_to;i++){
@@ -23,7 +24,7 @@ int main()
 
             /* Removing 1 coconut (for the monkey) and the amount that the 
             certain sailor takes for himself */
-            num_coc = num_coc - 1 - (num_coc-1)/num_sailors;
+            num_coc = (num_coc - 1)*perc;
         
 		}
 		
