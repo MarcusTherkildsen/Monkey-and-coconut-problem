@@ -1,30 +1,27 @@
 // Creating some start variables
-var num_sailors = 5;
-var search_to = 3500;
-var perc = (1-1/num_sailors);
+var sailors = 5;
+var monkeys = 1;
+var coconuts_tot = 0;
 
-// For a certain amount of coconuts to begin with
-for (var i=0; i<search_to; i++){
-	var num_coc = i;
+// Go through the number of coconuts
+while (0 == 0){
+	coconuts_tot += 1;
+	coconuts = coconuts_tot;
 	
 	// Go through the number of sailors
-	for (var j=0; j<num_sailors;j++){
+	for (j=0; j<sailors;j++){
 
-		// Removing 1 coconut (for the monkey) and the amount that the certain sailor takes for himself
-		num_coc = (num_coc - 1)*perc;		
+		// One for each monkey
+		coconuts -= monkeys;      
+		if (coconuts % sailors != 0){
+			break;
+		}			
+		coconuts -= coconuts/sailors;	
 	}
-
-	/*
-	Now each sailor has his own pile.
-	The monkey has 5 and there's a pile left.
-	Checking if there is an amount divisible by num_sailors left in the pile
-	and if the number of remaining is positive (of course)
-	 */
-
-	if ((num_coc % num_sailors == 0) & (num_coc >= 0)) {
-		/* If the remaining (positive) number of coconuts is divisible between the sailors, then we found
-		the solution.
-		*/
-		document.write("Solution: " + i + " coconuts to begin with");
-	}
+	
+	if (coconuts % sailors == 0){
+		break;        
+	} 
 }
+
+document.write("Solution: " + coconuts_tot + " coconuts to begin with");
