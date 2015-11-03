@@ -18,15 +18,13 @@ while 0 == 0
 		
 		% Divide equally among sailors
 		if mod(coconuts, sailors) != 0
-			%disp(mod(coconuts, sailors))
 			break
 		end
 	
 	coconuts -= coconuts/sailors;
 	
 	end 
-	
-	% Divide equally among sailors
+
     if mod(coconuts, sailors) == 0
 		break
     end
