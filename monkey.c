@@ -11,7 +11,7 @@ int main()
     // Creating some start variables
     int sailors = 5;
 	int monkeys = 1;
-    int i, j;
+    int j;
 	int coconuts_tot = 0;
     int coconuts;
 	
