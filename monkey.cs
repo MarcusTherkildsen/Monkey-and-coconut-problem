@@ -10,36 +10,32 @@ public class MonkeyCSharp {
     public static void Main(String[] args) {
         
         // Creating some start variables
-        float num_sailors = 5;
-        int search_to = 3500;
-		float perc = (1 - 1/num_sailors); 
+    int sailors = 5;
+	int monkeys = 1;
+    int j;
+	int coconuts_tot = 0;
+    int coconuts;
+	
+    // Go through the number of coconuts
+    while (0 == 0){
+		coconuts_tot += 1;
+        coconuts = coconuts_tot;
         
         // Go through the number of sailors
-        for (int i=0;i<search_to;i++){
-            float num_coc = i;
-            
-            // Go through the number of sailors
-            for (int j=0; j<num_sailors;j++){
+        for (j=0; j<sailors;j++){
 
-                // Removing 1 coconut (for the monkey) and the amount that the certain sailor takes for himself
-                num_coc = (num_coc - 1)*perc;
-            
-			}
-            
-            /*
-            Now each sailor has his own pile.
-            The monkey has 5 and there's a pile left.
-            Checking if there is an amount divisible by num_sailors left in the pile
-            and if the number of remaining is positive (of course)
-             */
-            
-            if ((num_coc % num_sailors == 0) & (num_coc >= 0)) {
-                /* If the remaining (positive) number of coconuts is divisible between the sailors, then we found
-                the solution.
-                */
-                Console.Write("Solution: " + i + " coconuts to begin with");
-            }
-        }
+            // One for each monkey
+            coconuts -= monkeys;      
+			if (coconuts % sailors != 0){
+				break;
+			}			
+			coconuts -= coconuts/sailors;	
+		}
 		
+		if (coconuts % sailors == 0){
+			break;        
+		} 
+    }
+    Console.Write("Solution: " + coconuts_tot + " coconuts to begin with");		
     }
 }
