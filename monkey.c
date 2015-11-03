@@ -1,5 +1,4 @@
 #include <stdio.h>      /* printf */
-#include <math.h>       /* fmod */
 
 /* For this to work you need to compile it with the command 
 gcc main.c -o demo -lm -pthread -lgmp -lreadline 2>&1
@@ -10,38 +9,32 @@ Click "Try it" and paste this code
 int main()
 {
     // Creating some start variables
-    float num_sailors = 5;
-    int search_to = 3500;
+    int sailors = 5;
+	int monkeys = 1;
     int i, j;
-    float num_coc;
-	float perc = (1 - 1/num_sailors); 
-    
+	int coconuts_tot = 0;
+    int coconuts;
+	
     // Go through the number of coconuts
-    for (i=0; i<search_to;i++){
-        num_coc = i;
+    while (0 == 0){
+		coconuts_tot += 1;
+        coconuts = coconuts_tot;
         
-        // Go through the number of sailors1
-        for (j=0; j<num_sailors;j++){
+        // Go through the number of sailors
+        for (j=0; j<sailors;j++){
 
-            /* Removing 1 coconut (for the monkey) and the amount that the 
-            certain sailor takes for himself */
-            num_coc = (num_coc - 1)*perc;
-        
+            // One for each monkey
+            coconuts -= monkeys;      
+			if (coconuts % sailors != 0){
+				break;
+			}			
+			coconuts -= coconuts/sailors;	
 		}
 		
-		/*
-        Now each sailor has his own pile.
-        The monkey has 5 and there's a pile left.
-        Checking if there is an amount divisible by num_sailors left in the pile
-        and if the number of remaining is positive (of course)
-         */
-		
-		
-		if (fmod(num_coc, num_sailors) == 0 & (num_coc >= 0)){
-            /* If the remaining (positive) number of coconuts is divisible
-            between the sailors, then we found the solution.*/
-	        printf ( "Solution: %d coconuts to begin with\n",i);
+		if (coconuts % sailors == 0){
+			break;        
 		} 
     }
+	printf ( "Solution: %d coconuts to begin with\n",coconuts_tot);
     return 0;
 }
