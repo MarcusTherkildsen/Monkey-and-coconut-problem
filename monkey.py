@@ -17,12 +17,12 @@ There is 1 coconut left over -> the monkey gets it.
 Then the sailor takes his pile and stores it somewhere.
 '''
 
-sailors = 5
-monkeys = 1
+sailors = 7
+monkeys = 3
 
 for coconuts_tot in itertools.count():
     coconuts = coconuts_tot
-    for sailor in range(sailors):
+    for sailor in xrange(sailors):
         # One for each monkey
         coconuts -= monkeys
         # Divide equally among sailors

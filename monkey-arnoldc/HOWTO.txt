@@ -1,0 +1,7 @@
+1. Compile with java -jar ArnoldC.jar monkey.arnoldc, this will give a monkey.class file
+2. Run the compiled .class file by writing java monkey
+
+Notes
+
+Since the ArnoldC language does not have a "break" operator I had
+to write the code just like the Python code in this folder.
