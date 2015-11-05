@@ -22,7 +22,7 @@ monkeys = 1
 
 for coconuts_tot in itertools.count():
     coconuts = coconuts_tot
-    for sailor in range(sailors):
+    for sailor in xrange(sailors):
         # One for each monkey
         coconuts -= monkeys
         # Divide equally among sailors
