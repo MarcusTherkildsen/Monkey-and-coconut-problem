@@ -5,7 +5,6 @@ Created on Tue May 12 11:23:45 2015
 @author: Marcus Therkildsen
 """
 from __future__ import division
-import itertools
 
 '''
 Reason for making this script: https://www.youtube.com/watch?v=U9qU20VmvaU

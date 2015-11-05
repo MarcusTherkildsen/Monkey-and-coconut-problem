@@ -3,5 +3,5 @@
 
 Notes
 
-Since the ArnoldC language does not have a "break" operator I had
+Since the ArnoldC language does not have a break statement I had
 to write the code just like the Python code in this folder.
