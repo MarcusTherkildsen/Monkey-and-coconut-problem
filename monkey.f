@@ -1,6 +1,6 @@
       PROGRAM HELLO
-*     The PRINT statement is like WRITE,
-*     but prints to the standard output unit
+*     Compile by running gfortran -o monkey.exe monkey.f
+*     Then write: monkey.exe
 		INTEGER, PARAMETER :: sailors = 5 ! declare a constant, whose value cannot be changed
 		INTEGER, PARAMETER :: monkeys = 1 ! declare a constant, whose value cannot be changed
 		INTEGER :: j, coconuts_tot, coconuts, coconut_loop, sailor_loop
