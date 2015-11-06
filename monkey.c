@@ -10,9 +10,9 @@ int main()
 {
     // Creating some start variables
     int sailors = 5;
-	int monkeys = 1;
+    int monkeys = 1;
     int j;
-	int coconuts_tot = 0;
+    int coconuts_tot = 0;
     int coconuts;
 	
     // Go through the number of coconuts
@@ -25,16 +25,16 @@ int main()
 
             // One for each monkey
             coconuts -= monkeys;      
-			if (coconuts % sailors != 0){
-				break;
-			}			
-			coconuts -= coconuts/sailors;	
-		}
+            if (coconuts % sailors != 0){
+            break;
+            }			
+            coconuts -= coconuts/sailors;	
+        }
 		
-		if (coconuts % sailors == 0){
-			break;        
-		} 
+        if (coconuts % sailors == 0){
+            break;        
+        } 
     }
-	printf ( "Solution: %d coconuts to begin with\n",coconuts_tot);
+    printf ( "Solution: %d coconuts to begin with\n",coconuts_tot);
     return 0;
 }
