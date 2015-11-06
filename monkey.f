@@ -1,6 +1,8 @@
       PROGRAM HELLO
-*     Compile by running gfortran -o monkey.exe monkey.f
-*     Then write: monkey.exe
+*     Compile by running 
+*	  gfortran -o monkey.exe monkey.f (on windows)
+*	  gfortran -o monkey.out monkey.f (on linux)
+*     Then run the compiled file
 		INTEGER, PARAMETER :: sailors = 5 ! declare a constant, whose value cannot be changed
 		INTEGER, PARAMETER :: monkeys = 1 ! declare a constant, whose value cannot be changed
 		INTEGER :: j, coconuts_tot, coconuts, coconut_loop, sailor_loop
