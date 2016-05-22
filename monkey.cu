@@ -9,37 +9,37 @@ nvcc -O3 -arch=sm_30 -o cuda_monkey monkey.cu
 
 unsigned int print2Smallest(unsigned int *arr, unsigned int arr_size)
 {
-    unsigned int i, first, second;
- 
-    /* There should be atleast two elements */
-    if (arr_size < 2)
+  unsigned int i, first, second;
+
+  /* There should be atleast two elements */
+  if (arr_size < 2)
+  {
+    printf(" Invalid Input ");
+    return 0;
+  }
+
+		// Error was here, before we had INT_MAX which is too low for >9 sailors
+  first = second = UINT_MAX;
+  for (i = 0; i < arr_size ; i ++)
+  {
+    /* If current element is smaller than first 
+       then update both first and second */
+    if (arr[i] < first)
     {
-        printf(" Invalid Input ");
-        return 0;
+        second = first;
+        first = arr[i];
     }
- 
- 		// Error was here, before we had INT_MAX which is too low for >9 sailors
-    first = second = UINT_MAX;
-    for (i = 0; i < arr_size ; i ++)
-    {
-        /* If current element is smaller than first 
-           then update both first and second */
-        if (arr[i] < first)
-        {
-            second = first;
-            first = arr[i];
-        }
- 
-        /* If arr[i] is in between first and second 
-           then update second  */
-        else if (arr[i] < second && arr[i] != first)
-            second = arr[i];
-    }
-    
-    if (second == UINT_MAX)
-    		return first;
-    else 
-				return second;
+
+    /* If arr[i] is in between first and second 
+       then update second  */
+    else if (arr[i] < second && arr[i] != first)
+      second = arr[i];
+  }
+  
+  if (second == UINT_MAX)
+  	return first;
+  else 
+		return second;
 }
 
 
@@ -66,11 +66,6 @@ void monkey(unsigned long long int *coconuts, unsigned long long int extra, unsi
 	    	found[0] = 1;
 	    	the_solutions[i] = i;   
 		  }
-		  /*
-		  else{
-		  	the_solutions[i] = 0; 
-		  } 
-		  */
 		}
 	}
 }
@@ -82,7 +77,7 @@ int main()
 	clock_t start, diff;
 	
 	// Size of array.
-	unsigned int SIZE = pow(2,25); //1048576
+	unsigned int SIZE = pow(2,25);
 
 	// CPU memory pointers
 	unsigned long long int *h_coc, da_solu=0;
