@@ -19,7 +19,6 @@ unsigned int print2Smallest(unsigned int *arr, unsigned int arr_size)
     return 0;
   }
 
-    // Error was here, before we had INT_MAX which is too low for >9 sailors
   first = second = UINT_MAX;
   for (i = 0; i < arr_size ; i ++)
   {
@@ -95,7 +94,7 @@ int main()
 
   // Sailors and monkeys
   unsigned int monkeys = 1;
-  unsigned int max_sailors = 5;
+  unsigned int max_sailors = 9;
 
   // CPU memory pointers
   unsigned long long int *h_coc, da_solu=1;
@@ -112,7 +111,7 @@ int main()
   h_tot = (unsigned int *)malloc(SIZE*sizeof(unsigned int));
   
   // Choose to run on secondary GPU
-  cudaSetDevice(1);
+  //cudaSetDevice(1);
 
   // Allocate the space, GPU
   cudaMalloc(&d_coc, SIZE*sizeof(unsigned long long int));
