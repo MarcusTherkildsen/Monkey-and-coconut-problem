@@ -25,7 +25,7 @@ int main()
             // One for each monkey
             coconuts -= monkeys;      
             if (coconuts % sailors != 0){
-            break;
+                break;
             }			
             coconuts -= coconuts/sailors;	
         }
