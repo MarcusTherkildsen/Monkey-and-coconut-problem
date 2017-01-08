@@ -1,0 +1,38 @@
+Monkeys and coconuts on the original gameboy
+
+The goal is to recreate the monkey and coconut solution in assembler for the original gameboy. 
+
+Goals
+1) Create "hello world" (3/4 - 6/4)
+2) Create for loops
+3) Do simple + calculations
+4) Figure out the break statement in loops
+5) Modulo operator in assembler
+6) Create the full program
+7) Create some dials to input the number of original sailors and monkeys
+
+8) Super extra stuff.
+Since our compiled code won't run on a real gameboy unless the Nintendo logo is intact do the next best thing. 
+
+After the Nintendo logo comes down and says "ding", immediately change the logo to "Monkeys and coconuts" or something
+
+
+Got gameboy specific files from 
+https://github.com/jeremyherbert/gb-snake
+gbhw.inc 
+ibmpc1.inc
+
+https://github.com/BonsaiDen/Tuff.gb
+
+https://github.com/assemblydigest/gameboy/tree/master/part-1-make-a-gb-rom/rgbds
+
+http://assemblydigest.tumblr.com/post/77198211186/tutorial-making-an-empty-game-boy-rom-in-rgbds
+
+
+http://cratel.wichita.edu/cratel/ECE238Spr08/software
+
+
+these are some good shit
+https://slashbinbash.wordpress.com/2013/09/10/gameboy-development/
+http://cratel.wichita.edu/blogs/assembly08/category/hello-gameboy/page/2/
+http://cratel.wichita.edu/blogs/assembly08/files/2008/02/hello-gameboy-arpatten.asm
