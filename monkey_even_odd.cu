@@ -1,8 +1,45 @@
+#pragma once
+
+#ifdef __INTELLISENSE__
+
+#include <cuda.h>
+#include <cuda_runtime.h>
+#include <device_launch_parameters.h>
+
+#define __CUDACC__
+
+#include <device_functions.h>
+
+#endif
+
+//#include <cuda.h>
+// CUDA runtime
+//#include "cuda_runtime.h"
+//#include "device_launch_parameters.h"
+
+// nvcc does not seem to like variadic macros, so we have to define
+// one for each kernel parameter list:
+#ifdef __CUDACC__
+#define KERNEL_ARGS2(grid, block) <<< grid, block >>>
+#define KERNEL_ARGS3(grid, block, sh_mem) <<< grid, block, sh_mem >>>
+#define KERNEL_ARGS4(grid, block, sh_mem, stream) <<< grid, block, sh_mem, stream >>>
+#else
+#define KERNEL_ARGS2(grid, block)
+#define KERNEL_ARGS3(grid, block, sh_mem)
+#define KERNEL_ARGS4(grid, block, sh_mem, stream)
+#endif
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include "monkey_even_odd.h"
 //#include <thrust/sort.h>
+
+// Now launch your kernel using the appropriate macro:
+//kernel KERNEL_ARGS2(dim3(nBlockCount), dim3(nThreadCount)) (param1);
+//https://stackoverflow.com/a/27992604/5241172
 
 /*
 nvcc -O3 -arch=sm_30 -o even_odd_cuda_monkey monkey_even_odd.cu
@@ -43,26 +80,29 @@ unsigned int print2Smallest(unsigned int *arr, unsigned int arr_size)
 }
 
 
-__global__
-void monkey(unsigned long long int *coconuts, unsigned int *tot, unsigned long long int extra, unsigned int *the_solutions, unsigned int *found, unsigned int sailors, unsigned int monkeys, unsigned int n)
+__global__ 
+void monkey(unsigned int *tot, unsigned long long int extra, unsigned int *the_solutions, unsigned int *found, unsigned int sailors, unsigned int monkeys, unsigned int n)
 {
   if (found[0] == 0){
 
-    unsigned int j;
     for (unsigned int i = blockIdx.x * blockDim.x + threadIdx.x; i<n; i+=blockDim.x*gridDim.x){
 
-      coconuts[i] = tot[i]+extra;
+	  unsigned char j;
+	  const unsigned long long int rExtra = extra;
+	  unsigned int rCoconuts = tot[i] + rExtra;
+	  const unsigned int rSailors = sailors;
+	  const unsigned int rMonkeys = monkeys;
 
       // Go through the number of sailors
-      for (j=0; j<sailors;j++){
+      for (j=0; j<rSailors;j++){
         // One for each monkey
-        coconuts[i] -= monkeys;      
-        if (coconuts[i] % sailors != 0){
+		  rCoconuts -= rMonkeys;
+        if (rCoconuts % rSailors != 0){
           break;
         }     
-        coconuts[i] -= coconuts[i]/sailors;   
+		rCoconuts -= rCoconuts/ rSailors;
       }
-      if (coconuts[i] % sailors == 0){ 
+      if (rCoconuts % rSailors == 0){
         found[0] = 1;
         the_solutions[i] = i;
 /*
@@ -90,18 +130,34 @@ int main()
   clock_t start, diff;
   
   // Size of array.
-  unsigned int SIZE = pow(2,25);
+  unsigned int SIZE = (unsigned int)pow(2, 21);// 65536;// 65025;// / 2;//(unsigned int)pow(2,25);
+  //unsigned int SIZE = 1024;// (unsigned int)pow(2, 20);
+
+  /*
+  // Possibly used to automate the SIZE value. For now, I found 2^21 to give good results 
+  size_t availableMemory, totalMemory, usedMemory;
+
+  cudaMemGetInfo(&availableMemory, &totalMemory);
+  usedMemory = totalMemory - availableMemory;
+  */
+
+
+  int blockSize;   // The launch configurator returned block size 
+  int minGridSize; // The minimum grid size needed to achieve the 
+				   // maximum occupancy for a full device launch 
+  int gridSize;    // The actual grid size needed, based on input size 
+
 
   // Sailors and monkeys
-  unsigned int monkeys = 1;
-  unsigned int max_sailors = 9;
+  unsigned char monkeys = 1;
+  unsigned char max_sailors = 9;
 
   // CPU memory pointers
   unsigned long long int *h_coc, da_solu=1;
   unsigned int *h_found, *h_solutions, *h_tot;
 
   // GPU memory pointers
-  unsigned long long int *d_coc, extra = 0;
+  unsigned long long int extra = 0;
   unsigned int *d_found, *d_solutions, *d_tot;
 
   // Allocate the space, CPU
@@ -111,10 +167,10 @@ int main()
   h_tot = (unsigned int *)malloc(SIZE*sizeof(unsigned int));
   
   // Choose to run on secondary GPU
-  //cudaSetDevice(1);
+  cudaSetDevice(1);
 
   // Allocate the space, GPU
-  cudaMalloc(&d_coc, SIZE*sizeof(unsigned long long int));
+  //cudaMalloc(&d_coc, SIZE*sizeof(unsigned long long int));
   cudaMalloc(&d_found, 1*sizeof(unsigned int));
   cudaMalloc(&d_solutions, SIZE*sizeof(unsigned int));
   cudaMalloc(&d_tot, SIZE*sizeof(unsigned int));
@@ -141,7 +197,7 @@ int main()
     //h_coc[j] = i;
     h_tot[j] = i;
     j++;
-    i=i+2;
+    i+=2;
   }
 
 /*
@@ -169,11 +225,18 @@ int main()
   //cudamemset can be used for initializing data (say, all zeros). 10 times faster than cudaMemcpy zero array because it is done on the gpu directly.
   cudaMemset(d_solutions, 0, SIZE*sizeof(unsigned int));
 
+  // Get some qualified guess as to how to choose gridsize and blocksize
+  cudaOccupancyMaxPotentialBlockSize(&minGridSize, &blockSize,
+	  monkey, 0, SIZE);
+  // Round up according to array size 
+  gridSize = (SIZE + blockSize - 1) / blockSize;
+
+
   // Start timer
   start = clock();
 
   // Run the loop 
-  for (unsigned int sailors=2; sailors<max_sailors+1;sailors++){
+  for (unsigned char sailors=2; sailors<max_sailors+1;sailors++){
 
     printf("Running %u sailors, %u monkeys\n", sailors, monkeys);
 
@@ -196,8 +259,8 @@ int main()
       printf("h_tot[SIZE-1]=%llu\n", h_tot[SIZE-1]+extra);
   */    
 
-      // Calling kernel (gridsize, blocksize)
-      monkey<<<(SIZE + 255) / 256, 256>>>(d_coc, d_tot, extra, d_solutions, d_found, sailors, monkeys, SIZE);
+      // Calling kernel (gridsize, blocksize found above)
+	  monkey KERNEL_ARGS2(gridSize, blockSize)(d_tot, extra, d_solutions, d_found, sailors, monkeys, SIZE);
 
       // Copy back result (Device to Host). 
       cudaMemcpy(h_found, d_found, 1*sizeof(unsigned int), cudaMemcpyDeviceToHost);
@@ -220,13 +283,12 @@ int main()
 
         if (sailors != max_sailors){
           // Set solution array to zero again
-          cudaMemset(d_solutions, 0, SIZE*sizeof(unsigned int));
-          
+          cudaMemset(d_solutions, 0, SIZE*sizeof(unsigned int));   
         }
       }
       else{
         // should always be equal amount
-        extra +=2*SIZE; // size is even times 2 since we only use hver anden
+        extra += 2*SIZE; // size is even times 2 since we only use hver anden
         //printf("."); 
       }
     }
@@ -249,7 +311,7 @@ int main()
   cudaFreeHost(h_solutions);
 
   // Free GPU memory
-  cudaFree(d_coc);  
+  //cudaFree(d_coc);  
   cudaFree(d_tot);
   cudaFree(d_found);
   cudaFree(d_solutions);
